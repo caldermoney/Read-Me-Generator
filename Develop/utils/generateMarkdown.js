@@ -1,29 +1,51 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
+// Creates a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
-function renderLicenseBadge(license) {}
+function renderLicenseBadge(license) {
+  if (license !== 'none') {
+    return `![Static Badge](https://img.shields.io/badge/license-${license}-blue.svg)`;
+  }
+  return '';
+}
 
-// TODO: Create a function that returns the license link
+// Creates a function that returns the license link
 // If there is no license, return an empty string
-function renderLicenseLink(license) {}
+function renderLicenseLink(license) {
+  const licenseLinks = {
+    'MIT': 'https://opensource.org/licenses/MIT',
+    'Apache 2.0': 'https://opensource.org/licenses/Apache-2.0',
+    'GPLv3': 'https://www.gnu.org/licenses/gpl-3.0',
+    'BSD 3-Clause': 'https://opensource.org/licenses/BSD-3-Clause',
+    'None': ''
+  };
 
-// TODO: Create a function that returns the license section of README
+  return licenseLinks[license] || '';
+}
+
+// Creates a function that returns the license section of README
 // If there is no license, return an empty string
-function renderLicenseSection(license) {}
+function renderLicenseSection(license) {
+  if (license !== 'None') {
+    return `This project is licensed under the [${license}](${renderLicenseLink(license)}) license.`;
+  }
+  return 'This project doesn\'t have a license.';
+}
 
-// TODO: Create a function to generate markdown for README
+// Creates a function to generate markdown for README
 function generateReadme(answers) {
   return `# ${answers.title}
+
+  ${renderLicenseBadge(answers.license)}
 
   ## Description
   ${answers.description}
 
   ## Table of Contents
-  * Installation
-  * Usage
-  * License
-  * Contributing
-  * Tests
-  * Questions
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [License](#license)
+  * [Contributing](#contributing)
+  * [Tests](#tests)
+  * [Questions](#questions)
   
   ## Installation
   ${answers.installation}
@@ -32,7 +54,7 @@ function generateReadme(answers) {
   ${answers.usage}
 
   ## License
-  This project is licensed under the ${answers.license} license.
+  ${renderLicenseSection(answers.license)}
 
   ## Contributing
   ${answers.contribution}
